@@ -1,0 +1,119 @@
+html,
+body {
+  border: 0;
+  width: 100%;
+}
+
+.variable-section {
+  float: left;
+  height: 100vh;
+  overflow: scroll;
+  width: 25%;
+  border-right: 2px solid #CCC;
+  box-sizing: border-box;
+
+  .side-title {
+    width: 100%;
+    font-size: 24px;
+    color: #CCC;
+    text-align: center;
+  }
+
+  .variable-table {
+    width: 100%;
+    border-collapse: collapse;
+
+    th {
+      text-align: center;
+    }
+
+    tr {
+      width: 100%;
+      padding: 10px 0;
+
+      td {
+        width: 50%;
+      }
+    }
+
+    input {
+      font-size: 16px;
+      width: 80%;
+      display: block;
+      border: 2px solid #CCC;
+      margin: 0 auto;
+      padding: 5px;
+
+      &:focus {
+        outline: none;
+        border-color: #333;
+      }
+    }
+  }
+
+  .add-variable-button {
+    background-color: green;
+    border-radius: 50%;
+    display: block;
+    margin: 20px auto 0;
+    font-size: 14px;
+    color: #FFF;
+    position: relative;
+    height: 25px;
+    width: 25px;
+    border: 2px solid darken(green, .2);
+
+    &:after {
+      content: '+';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translateX(-50%) translateY(-50%);
+    }
+    &:hover {
+      background-color: lighten(green, 10);
+    }
+    &:focus {
+      outline: none;
+      background-color: lighten(green, .5);
+    }
+  }
+}
+
+
+.equation-section {
+  float: left;
+  width: 70%;
+  position: relative;
+  height: 100vh;
+
+  .equation-container {
+    position: absolute;
+    top: 30%;
+    transform: translateY(-50%) translateX(-50%);
+    display: block;
+    left: 50%;
+
+    .equation-label {
+      font-size: 36px;
+      color: #555;
+      width: 100%;
+      text-align: center;
+      margin-bottom: 20px;
+      display: block;
+    }
+
+    .equation {
+      font-size: 36px;
+      border: 3px solid #CCC;
+      display: block;
+      margin: 0 auto;
+      padding: 5px;
+
+      &:focus {
+        border-color: #007f00;
+        outline: none;
+      }
+    }
+  }
+}
