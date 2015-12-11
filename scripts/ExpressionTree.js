@@ -4,10 +4,10 @@ import UnaryNode from 'UnaryNode';
 import ConstantNode from 'ConstantNode';
 import { BINARY_OPS, UNARY_OPS } from 'Operators';
 
-export default class EquationTree {
-  constructor(equationString) {
+export default class ExpressionTree {
+  constructor(expressionString) {
     this.postfixConverter = new PostfixConverter();
-    const postfixStringArray = this.postfixConverter.toPostfix(equationString);
+    const postfixStringArray = this.postfixConverter.toPostfix(expressionString);
 
     this.expressionTree = this._postfixToTree(postfixStringArray);
   }
@@ -42,13 +42,8 @@ export default class EquationTree {
     return this.expressionTree.evaluate(context);
   }
 
-  updateEquation(equationString) {
-    const postfixStringArray = this.postfixConverter.toPostfix(equationString);
+  updateEquation(expressionString) {
+    const postfixStringArray = this.postfixConverter.toPostfix(expressionString);
     this.expressionTree = this._postfixToTree(postfixStringArray);
-  }
-
-  isEquationValid(context) {
-    const contextVars = Object.keys(context).join('|');
-
   }
 }

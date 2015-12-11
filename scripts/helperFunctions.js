@@ -35,3 +35,19 @@ export function debounce(fx, delay) {
     }, delay);
   };
 }
+
+/**
+ * Repeats a given string count number of times
+ * @param {string} str - the string to repeat
+ * @param {number} count - number of times to repeat the string
+ * @returns {string} - the repeated string
+ */
+export function repeat(str, count) {
+  let repeated = '';
+
+  while(count--) {
+    repeated += str;
+  }
+
+  return repeated;
+}

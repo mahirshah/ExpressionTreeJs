@@ -7,6 +7,6 @@ export default class ConstantNode extends ExpressionNode {
   }
 
   evaluate(context) {
-    return context[this.constant] || this.constant;
+    return +context[this.constant] || this.constant;
   }
 }
