@@ -1,26 +1,43 @@
 import { debounce, repeat } from 'helperFunctions';
 import ExpressionTree from 'ExpressionTree';
+import EquationSolver from 'EquationSolver';
 
 export default class EquationInput {
   constructor(inputElement, variableTable, answerOutput) {
     this.inputElement = inputElement;
     this.variableTable = variableTable;
     this.answerOutput = answerOutput;
-    this.equationTree = new ExpressionTree(this.inputElement.value);
+    this.expressionTree1 = new ExpressionTree();
+    this.expressionTree2 = new ExpressionTree();
     this.value = null;
     this._attachEvents();
   }
 
   _attachEvents() {
-    this.inputElement.addEventListener('input', debounce((evt) => {
-      const fixedInput = this._fixInputValue(this.inputElement.value);
-
-      this.equationTree.updateEquation(fixedInput);
+    this.inputElement.addEventListener('input', debounce(() => {
+      const inputValue = this.inputElement.value;
+      const numEquals = (inputValue.match(/=/g) || []).length;
 
       try {
-        this.value = this.equationTree.evaluate(this.variableTable.getContext());
+        if (numEquals > 1) {
+          throw new Error('Too many equal symbols');
+        } else if (numEquals === 1) { // equation to be solved
+          const expressions = inputValue.split('=');
+          let equationSolver = null;
 
-        this.answerOutput.innerText = !isNaN(this.value) ? this.value : '';
+          this.expressionTree1.updateEquation(expressions[0]);
+          this.expressionTree2.updateEquation(expressions[1]);
+
+          equationSolver = new EquationSolver(this.expressionTree1, this.expressionTree2, this.variableTable.getContext());
+          this.answerOutput.innerText = equationSolver.evaluate();
+        } else { // expression
+          const fixedInput = this._fixInputValue(this.inputElement.value);
+
+          this.expressionTree1.updateEquation(fixedInput);
+
+          this.value = this.expressionTree1.evaluate(this.variableTable.getContext());
+          this.answerOutput.innerText = !isNaN(this.value) ? this.value : '';
+        }
       } catch (exception) {
         this.answerOutput.innerText = '';
       }

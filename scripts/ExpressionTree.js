@@ -5,7 +5,7 @@ import ConstantNode from 'ConstantNode';
 import { BINARY_OPS, UNARY_OPS } from 'Operators';
 
 export default class ExpressionTree {
-  constructor(expressionString) {
+  constructor(expressionString = '') {
     this.postfixConverter = new PostfixConverter();
     const postfixStringArray = this.postfixConverter.toPostfix(expressionString);
 
@@ -44,6 +44,7 @@ export default class ExpressionTree {
 
   updateEquation(expressionString) {
     const postfixStringArray = this.postfixConverter.toPostfix(expressionString);
+
     this.expressionTree = this._postfixToTree(postfixStringArray);
   }
 }

@@ -1,5 +1,4 @@
 import VariableTable from 'VariableTable';
-import EquationTree from 'EquationTree';
 import EquationInput from 'EquationInput';
 
 const addVariableButtonClass = '.add-variable-button';

@@ -80,6 +80,17 @@ define(['exports', 'ExpressionNode'], function (exports, _ExpressionNode2) {
       value: function evaluate(context) {
         return +context[this.constant] || this.constant;
       }
+    }, {
+      key: 'iterate',
+      value: function iterate(callback) {
+        var thisArg = arguments.length <= 1 || arguments[1] === undefined ? null : arguments[1];
+        callback.call(thisArg, this.constant);
+      }
+    }, {
+      key: 'toInfix',
+      value: function toInfix() {
+        return this.constant;
+      }
     }]);
 
     return ConstantNode;

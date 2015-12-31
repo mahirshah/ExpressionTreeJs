@@ -3,6 +3,8 @@ const babel = require('gulp-babel');
 const uglify = require('gulp-uglify');
 const concat = require('gulp-concat');
 const sass = require('gulp-sass');
+const mocha = require('gulp-mocha');
+const babelRegister = require('babel/register');
 
 gulp.task('default', ['js', 'sass']);
 
@@ -25,3 +27,9 @@ gulp.task('watch', () => {
   gulp.watch('styles/*.scss', ['sass']);
   gulp.watch('scripts/*.js', ['js']);
 });
+
+gulp.task('test', () => {
+  return gulp.src('tests/*.js')
+    .pipe(mocha({}));
+});
+

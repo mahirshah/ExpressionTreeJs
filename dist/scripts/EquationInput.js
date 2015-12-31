@@ -1,11 +1,13 @@
 'use strict';
 
-define(['exports', 'helperFunctions', 'ExpressionTree'], function (exports, _helperFunctions, _ExpressionTree) {
+define(['exports', 'helperFunctions', 'ExpressionTree', 'EquationSolver'], function (exports, _helperFunctions, _ExpressionTree, _EquationSolver) {
   Object.defineProperty(exports, "__esModule", {
     value: true
   });
 
   var _ExpressionTree2 = _interopRequireDefault(_ExpressionTree);
+
+  var _EquationSolver2 = _interopRequireDefault(_EquationSolver);
 
   function _interopRequireDefault(obj) {
     return obj && obj.__esModule ? obj : {
@@ -44,7 +46,8 @@ define(['exports', 'helperFunctions', 'ExpressionTree'], function (exports, _hel
       this.inputElement = inputElement;
       this.variableTable = variableTable;
       this.answerOutput = answerOutput;
-      this.equationTree = new _ExpressionTree2.default(this.inputElement.value);
+      this.expressionTree1 = new _ExpressionTree2.default();
+      this.expressionTree2 = new _ExpressionTree2.default();
       this.value = null;
 
       this._attachEvents();
@@ -55,14 +58,31 @@ define(['exports', 'helperFunctions', 'ExpressionTree'], function (exports, _hel
       value: function _attachEvents() {
         var _this = this;
 
-        this.inputElement.addEventListener('input', (0, _helperFunctions.debounce)(function (evt) {
-          var fixedInput = _this._fixInputValue(_this.inputElement.value);
-
-          _this.equationTree.updateEquation(fixedInput);
+        this.inputElement.addEventListener('input', (0, _helperFunctions.debounce)(function () {
+          var inputValue = _this.inputElement.value;
+          var numEquals = (inputValue.match(/=/g) || []).length;
 
           try {
-            _this.value = _this.equationTree.evaluate(_this.variableTable.getContext());
-            _this.answerOutput.innerText = !isNaN(_this.value) ? _this.value : '';
+            if (numEquals > 1) {
+              throw new Error('Too many equal symbols');
+            } else if (numEquals === 1) {
+              var expressions = inputValue.split('=');
+              var equationSolver = null;
+
+              _this.expressionTree1.updateEquation(expressions[0]);
+
+              _this.expressionTree2.updateEquation(expressions[1]);
+
+              equationSolver = new _EquationSolver2.default(_this.expressionTree1, _this.expressionTree2, _this.variableTable.getContext());
+              _this.answerOutput.innerText = equationSolver.evaluate();
+            } else {
+              var fixedInput = _this._fixInputValue(_this.inputElement.value);
+
+              _this.expressionTree1.updateEquation(fixedInput);
+
+              _this.value = _this.expressionTree1.evaluate(_this.variableTable.getContext());
+              _this.answerOutput.innerText = !isNaN(_this.value) ? _this.value : '';
+            }
           } catch (exception) {
             _this.answerOutput.innerText = '';
           }

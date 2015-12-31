@@ -86,6 +86,18 @@ define(['exports', 'ExpressionNode', 'Operators'], function (exports, _Expressio
       value: function evaluate(context) {
         return _Operators.OPERATOR_FUNCTION_MAP.get(this.operator)(this.left.evaluate(context), this.right.evaluate(context));
       }
+    }, {
+      key: 'iterate',
+      value: function iterate(callback) {
+        var thisArg = arguments.length <= 1 || arguments[1] === undefined ? null : arguments[1];
+        this.left.iterate(callback, thisArg);
+        this.right.iterate(callback, thisArg);
+      }
+    }, {
+      key: 'toInfix',
+      value: function toInfix() {
+        return '(' + this.left.toInfix() + this.operator + this.right.toInfix() + ')';
+      }
     }]);
 
     return BinaryNode;

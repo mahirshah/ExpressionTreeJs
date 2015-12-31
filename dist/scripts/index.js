@@ -1,9 +1,7 @@
 'use strict';
 
-define(['VariableTable', 'EquationTree', 'EquationInput'], function (_VariableTable, _EquationTree, _EquationInput) {
+define(['VariableTable', 'EquationInput'], function (_VariableTable, _EquationInput) {
   var _VariableTable2 = _interopRequireDefault(_VariableTable);
-
-  var _EquationTree2 = _interopRequireDefault(_EquationTree);
 
   var _EquationInput2 = _interopRequireDefault(_EquationInput);
 

@@ -54,9 +54,10 @@ define(['exports', 'PostfixConverter', 'BinaryNode', 'UnaryNode', 'ConstantNode'
   }
 
   var ExpressionTree = (function () {
-    function ExpressionTree(expressionString) {
+    function ExpressionTree() {
       _classCallCheck(this, ExpressionTree);
 
+      var expressionString = arguments.length <= 0 || arguments[0] === undefined ? '' : arguments[0];
       this.postfixConverter = new _PostfixConverter2.default();
       var postfixStringArray = this.postfixConverter.toPostfix(expressionString);
       this.expressionTree = this._postfixToTree(postfixStringArray);
